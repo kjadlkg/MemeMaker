@@ -3,18 +3,25 @@ const ctx = canvas.getContext("2d")  // Choose 2D(2d) or 3D(other)
 canvas.width = 800;
 canvas.height = 800;
 
-// torso
-ctx.fillRect(210, 200, 15, 100);
-ctx.fillRect(350, 200, 15, 100);
-ctx.fillRect(260, 200, 60, 200);
+ctx.lineWidth = 2;
 
-// head
-ctx.arc(290, 130, 50, 0, 2 * Math.PI);  // Ref: img of the endAngle
-ctx.fill();
+const colors = [    // flatuicolors.com
+    "#ff3838",
+    "#ffb8b8",
+    "#c56cf0",
+    "#ff9f1a",
+    "#fff200",
+    "#32ff7e",
+    "#7efff5",
+];
 
-// face
-ctx.beginPath();
-ctx.fillStyle = "white";
-ctx.arc(270 - 5, 130, 10, Math.PI, 2 * Math.PI);
-ctx.arc(320 - 5, 130, 10, Math.PI, 2 * Math.PI);
-ctx.fill();
+function onMouseMove(event) {
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    ctx.strokeStyle = color;
+    ctx.lineTo(event.offsetX, event.offsetY);
+    ctx.stroke();
+}
+
+canvas.addEventListener("mousemove", onMouseMove);
