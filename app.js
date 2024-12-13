@@ -6,6 +6,8 @@ const colorOptions = Array.from(
 const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn");
 const eraserBtn = document.getElementById("eraser-btn");
+const fileInput = document.getElementById("file");
+
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d")  // Choose 2D(2d) or 3D(other)
 
@@ -82,12 +84,27 @@ function onEraserClick() {
     modeBtn.innerText = "Fill";
 }
 
+function onFileChange(event){
+    // console.dir(event.target);
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    // console.log(url);
+    const image = new Image();
+    image.src = url;
+    image.onload = function() {
+        ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        fileInput.value = null;
+    }
+}
+
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
-colorOptions.forEach(color => color.addEventListener("click", onColorClick));
+colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
 modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
+fileInput.addEventListener("change", onFileChange);
+
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
