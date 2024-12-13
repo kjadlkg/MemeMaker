@@ -7,6 +7,7 @@ const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn");
 const eraserBtn = document.getElementById("eraser-btn");
 const fileInput = document.getElementById("file");
+const textInput = document.getElementById("text");
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d")  // Choose 2D(2d) or 3D(other)
@@ -16,7 +17,7 @@ const CANVAS_HEIGHT = 800;
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
-
+ctx.lineCap = "round";
 ctx.lineWidth = lineWidth.value;
 let isPainting = false;
 let isFilling = false;
@@ -97,6 +98,17 @@ function onFileChange(event){
     }
 }
 
+function onDoubleClick(event) {
+    const text = textInput.value;
+    if(text !== "") {
+        ctx.save();     // Save current status, color, size, etc
+        ctx.lineWidth = 1;
+        ctx.font = "50px serif";
+        ctx.fillText(text, event.offsetX, event.offsetY);
+        ctx.restore();  // Return to save state
+    }
+}
+
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
 colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
@@ -110,3 +122,4 @@ canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
 canvas.addEventListener("mousedown", onCanvasClick);
+canvas.addEventListener("dblclick", onDoubleClick);
