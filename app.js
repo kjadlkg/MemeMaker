@@ -9,6 +9,10 @@ const eraserBtn = document.getElementById("eraser-btn");
 const fileInput = document.getElementById("file");
 const textInput = document.getElementById("text");
 const saveBtn = document.getElementById("save-btn");
+const fontSize = document.getElementById("font-size");
+const fontFamily = document.getElementById("font-family");
+const modeFill = document.getElementById("mode-fill");
+const modeStroke = document.getElementById("mode-stroke");
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d")  // Choose 2D(2d) or 3D(other)
@@ -22,6 +26,7 @@ ctx.lineCap = "round";
 ctx.lineWidth = lineWidth.value;
 let isPainting = false;
 let isFilling = false;
+let isTextFill = false;
 
 function onMove(event) {
     if(isPainting) {
@@ -42,7 +47,7 @@ function cancelPainting() {
 }
 
 function onLineWidthChange(event) {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     ctx.lineWidth = event.target.value;
 }
 
@@ -101,11 +106,18 @@ function onFileChange(event){
 
 function onDoubleClick(event) {
     const text = textInput.value;
+    const fontSizeValue = fontSize.value;
+    const fontFamilyValue = fontFamily.options[fontFamily.selectedIndex].value;
+
     if(text !== "") {
         ctx.save();     // Save current status, color, size, etc
         ctx.lineWidth = 1;
-        ctx.font = "50px serif";
-        ctx.fillText(text, event.offsetX, event.offsetY);
+        ctx.font = `${fontSizeValue}px ${fontFamilyValue}`;
+        if(isTextFill) {
+            ctx.fillText(text, event.offsetX, event.offsetY);
+        } else {
+            ctx.strokeText(text, event.offsetX, event.offsetY);
+        }
         ctx.restore();  // Return to save state
     }
 }
@@ -119,6 +131,14 @@ function onSaveClick(event) {
     a.click();
 }
 
+function onFillText() {
+    isTextFill = true;
+}
+
+function onStrokeText() {
+    isTextFill = false;
+}
+
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
 colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
@@ -127,6 +147,8 @@ destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
 saveBtn.addEventListener("click", onSaveClick);
+modeFill.addEventListener("click", onFillText);
+modeStroke.addEventListener("click", onStrokeText);
 
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);

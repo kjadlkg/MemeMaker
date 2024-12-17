@@ -25,13 +25,27 @@
     <canvas></canvas>
     <div class="btns">
         <input id="line-width" type="range" min="1" max="10" value="5" step="0.1">
-        <button id="mode-btn">Fill</button>
-        <button id="destroy-btn">Clear</button>
-        <button id="eraser-btn">Erase</button>
-        <input type="text" placeholder="Write and then double click" id="text"/>
+        <div class="btns-rows">
+            <button id="mode-btn">Fill</button>
+            <button id="destroy-btn">Clear</button>
+            <button id="eraser-btn">Erase</button>
+        </div>
         <label for="file">Add Photo</label>
         <input type="file" accept="image/*" id="file"/>    <!-- Upload only image files -->
         <button id="save-btn">Save image</button>
+    </div>
+    <div class="text">
+        <div class="text-rows">
+            <select id="font-family">
+                <option value="serif">serif</option>
+                <option value="sans-serif">sans-serif</option>
+                <option value="cursive">cursive</option>
+            </select>
+            <input id="font-size" type="number" value="50" step="0.5"/>
+            <button id="mode-fill">Fill Text</button>
+            <button id="mode-stroke">Stroke Text</button>
+        </div>
+        <input type="text" placeholder="Write and then double click" id="text"/>
     </div>
     <script src="app.js"></script>
 </body>
