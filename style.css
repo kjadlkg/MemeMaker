@@ -44,19 +44,25 @@ body {
     align-items: center;
 }
 
-.btns{
+/* .btns {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 300px;
 }
 
+.text{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+} */
+
 input#color {
     background-color: white;
 }
 
-button, label {
-    all: unset;     /* Remove all css */
+/* button, label {
+    all: unset;
     padding: 10px 0px;
     text-align: center;
     background-color:royalblue;
@@ -82,4 +88,4 @@ input#text {
     background-color:white;
     font-weight: 500;
     border-radius: 10px;
-}
+} */
