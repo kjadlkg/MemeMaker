@@ -5,6 +5,7 @@ const colorOptions = Array.from(
 );
 const modeFillCanvas = document.getElementById("fill-canvas");
 const modeStrokeCanvas = document.getElementById("stroke-canvas");
+const modeDrawAndFill = document.getElementById("draw-fill");
 const destroyBtn = document.getElementById("destroy-btn");
 const eraserBtn = document.getElementById("eraser-btn");
 const fileInput = document.getElementById("file");
@@ -27,12 +28,17 @@ ctx.lineCap = "round";
 ctx.lineWidth = lineWidth.value;
 let isPainting = false;
 let isFilling = false;
-let isTextFill = false;
+let isTextFill = true;
+let isDrawAndFill = false;
 
 function onMove(event) {
     if(isPainting) {
         ctx.lineTo(event.offsetX, event.offsetY);
-        ctx.stroke();
+        if(isDrawAndFill) {
+            ctx.fill();
+        } else {
+            ctx.stroke();
+        }
         return;
     }
     ctx.moveTo(event.offsetX, event.offsetY);
@@ -67,10 +73,19 @@ function onColorClick(event) {
 
 function onModeFillClick() {
     isFilling = true;
+    isDrawFill = false;
+    ctx.fillStyle = color.value;
 }
 
 function onModeStrokeClick() {
     isFilling = false;
+    isDrawFill = false;
+    ctx.strokeStyle = color.value;
+}
+
+function onModeDrawAndFillClick() {
+    isFilling = false;
+    isDrawFill = true;
 }
 
 function onCanvasClick() {
@@ -90,6 +105,7 @@ function onDestroyClick() {
 function onEraserClick() {
     ctx.strokeStyle = "white";
     isFilling = false;
+    isDrawAndFill = false;
 }
 
 function onFileChange(event){
@@ -145,6 +161,7 @@ color.addEventListener("change", onColorChange);
 colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
 modeFillCanvas.addEventListener("click", onModeFillClick);
 modeStrokeCanvas.addEventListener("click", onModeStrokeClick);
+modeDrawAndFill.addEventListener("click", onModeDrawAndFillClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
