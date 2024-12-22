@@ -75,6 +75,7 @@ function onModeFillClick() {
     isFilling = true;
     isDrawFill = false;
     ctx.fillStyle = color.value;
+    ctx.strokeStyle = color.value;
 }
 
 function onModeStrokeClick() {
